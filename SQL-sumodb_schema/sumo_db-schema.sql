@@ -34,5 +34,3 @@ CREATE TABLE stables
 	,   Lng			     FLOAT			NOT NULL
 	
 );
-
-
