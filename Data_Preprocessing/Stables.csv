@@ -1,4 +1,4 @@
-id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
+id,rank,fighter,dojo,district,birth_date,height,weight,lat,lng
 4095,Y2eHD,Wakanohana,Futagoyama,Aomori,4/3/53,186,133,43.0431112,141.3160186
 4122,M14e,Kurosegawa,Isegahama,Tokyo,5/13/51,184,130,32.413809,131.6495062
 4103,M14w,Banryuyama,Mihogaseki,Hyogo,5/4/51,177.5,135,35.4958382,136.9181807
@@ -37,11 +37,11 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 1372,M12e,Maenoshin,Takadagawa,Fukuoka,4/17/61,184,141,34.8228478,135.594865
 1374,M13e,Kurama,Tokitsukaze,Shiga,12/16/52,188,140.5,35.6937382,139.7945024
 1369,M13e,Toryu,Mihogaseki,Hyogo,12/19/58,180,147,35.4958382,136.9181807
-4099,M13e,Kirinji,Nishonoseki,Chiba,3/9/53,183,144,35.7230517,139.9683767
+4099,M13e,Kirinji,Nishonoseki,Chiba,3/9/53,183,144,35.4958382,136.9181807
 4141,M9e,Nankairyu,Takasago,Western Samoa,2/22/65,188,153,34.7661005,134.7906014
-1361,M11w,Daitetsu,Nishonoseki,Fukui,10/29/56,193,130,35.7230517,139.9683767
+1361,M11w,Daitetsu,Nishonoseki,Fukui,10/29/56,193,130,34.7661005,134.7906014
 1331,M14e,Saganobori,Oshiogawa,Saga,11/27/61,190,117,36.3260317,136.5289653
-1378,M9e,Hoo,Nishonoseki,Aichi,12/7/56,180,140,35.7230517,139.9683767
+1378,M9e,Hoo,Nishonoseki,Aichi,12/7/56,180,140,36.3260317,136.5289653
 1379,O2eHD,Asashio,Takasago,Kochi,12/9/55,183,169,34.7661005,134.7906014
 1366,M12e,Takanomine,Izutsu,Fukuoka,1/23/59,184,102,35.0044519,135.7723814
 1345,M13w,Tamaryu,Kataonami,Nagasaki,7/22/54,191,125,34.1801053,135.1744606
@@ -136,7 +136,7 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 18,M14w,Takatoriki,Futagoyama,Hyogo,9/28/67,180,144,43.0431112,141.3160186
 874,M14e,Hamanishiki,Oitekaze,Kumamoto,11/23/76,181,126,35.812615,139.814385
 58,M15e,Oikari,Isenoumi,Kyoto,6/16/72,176,133,35.7256939,139.7456538
-51,M11e,Daizen,Nishonoseki,Osaka,12/14/64,188,156,35.7230517,139.9683767
+51,M11e,Daizen,Nishonoseki,Osaka,12/14/64,188,156,35.7256939,139.7456538
 2,Y1w,Takanohana,Futagoyama,Tokyo,8/12/72,185,161,43.0431112,141.3160186
 9,M15w,Akinoshima,Futagoyama,Hiroshima,3/16/67,175,148.6,43.0431112,141.3160186
 22,M9e,Gojoro,Magaki,Miyagi,8/18/73,191,156.4,37.1854839,140.4463218
@@ -176,7 +176,7 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 6766,M13w,Ichihara,Kise,Aichi,8/16/84,182,182.5,26.5334687,127.9413748
 40,M14e,Kaiho,Hakkaku,Aomori,4/17/73,177,122,49.280869,-123.0019651
 924,M15e,Wakakirin,Oguruma,Hyogo,9/21/83,186.5,133,44.6167739,142.2331405
-6620,M15w,Sakaizawa,Onoe,Saitama,4/11/83,189,162.5,35.1707418,136.8964451
+6620,M15w,Sakaizawa,Onoe,Saitama,4/11/83,189,162.5,35.6303744,139.7442245
 63,M16e,Otsukasa,Irumagawa,Hyogo,2/18/71,175,147.1,35.8506694,139.4084837
 1031,M16w,Ryuo,Miyagino,Mongolia,3/11/83,176,145.1,38.2789376,140.9508565
 1402,M15e,Hakurozan,Kitanoumi,Russia,2/6/82,188,133,35.2477713,-106.6916609
@@ -187,7 +187,7 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 898,M6w,Chiyohakuho,Kokonoe,Kumamoto,4/21/83,181.5,135,33.2285239,131.1888843
 31,M13w,Dejima,Musashigawa,Ishikawa,3/21/74,180,160.3,35.7127733,139.8643459
 2834,M15w,Futeno,Dewanoumi,Kumamoto,8/28/80,180.5,157.2,35.6923601,139.7926487
-6769,M15e,Yamamotoyama,Onoe,Saitama,5/8/84,190,251.5,35.1707418,136.8964451
+6769,M15e,Yamamotoyama,Onoe,Saitama,5/8/84,190,251.5,35.6303744,139.7442245
 878,Y1w,Asashoryu,Takasago,Mongolia,9/27/80,184,148,34.7661005,134.7906014
 8,S1w,Chiyotaikai,Kokonoe,Oita,4/29/76,181,154.1,33.2285239,131.1888843
 1087,M5e,Iwakiyama,Sakaigawa,Aomori,3/2/76,183.5,171.5,43.0382724,141.3153207
@@ -224,14 +224,14 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 6552,M15w,Sotairyu,Tokitsukaze,Fukushima,7/26/82,179,119,35.6937382,139.7945024
 5988,M16e,Oiwato,Hakkaku,Yamagata,5/18/81,178,140,49.280869,-123.0019651
 11989,M16w,Daikiho,Miyagino,Fukuoka,5/13/89,182,152,38.2789376,140.9508565
-6432,M6e,Baruto,Onoe,Estonia,11/5/84,197,193,35.1707418,136.8964451
+6432,M6e,Baruto,Onoe,Estonia,11/5/84,197,193,35.6303744,139.7442245
 6497,M11e,Daido,Onomatsu,Tokyo,8/21/82,188,169,35.670438,140.0347887
 6531,M16e,Asahisho,Tomozuna,Chiba,7/21/89,175,140,33.5948329,130.3595555
 6771,M16e,Aran,Kasugano,Russia,1/31/84,186,147,37.1520331,138.2314092
 795,M16w,Tamaasuka,Kataonami,Aichi,1/26/83,185,158.5,34.1801053,135.1744606
 1141,M11e,Shotenro,Fujishima,Mongolia,1/31/82,189,157.5,38.7655108,139.9081258
 2830,S1w,Kotooshu,Sadogatake,Bulgaria,2/19/83,202,157,35.7772605,139.9616965
-6770,M15e,Tenkaiho,Onoe,Kumamoto,10/14/84,184,189,35.1707418,136.8964451
+6770,M15e,Tenkaiho,Onoe,Kumamoto,10/14/84,184,189,35.6303744,139.7442245
 6654,M13e,Masunoyama,Chiganoura,Chiba,11/1/90,180,174,35.7240504,139.8063938
 39,M16e,Wakanosato,Tagonoura,Aomori,7/10/76,184,161,40.77555,140.5178517
 6018,M13e,Homasho,Shikoroyama,Yamaguchi,4/16/81,185,149,35.5891521,139.2854104
@@ -243,7 +243,7 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 2818,M14w,Tokitenku,Tokitsukaze,Mongolia,9/10/79,186,143,35.6937382,139.7945024
 1009,M16e,Asasekiryu,Takasago,Mongolia,8/7/81,184,145,34.7661005,134.7906014
 11971,M14e,Jokoryu,Kise,Tokyo,8/7/88,187,162.4,26.5334687,127.9413748
-5985,M15e,Satoyama,Onoe,Kagoshima,5/31/81,177,121,35.1707418,136.8964451
+5985,M15e,Satoyama,Onoe,Kagoshima,5/31/81,177,121,35.6303744,139.7442245
 813,M15w,Kitataiki,Yamahibiki,Tokyo,10/5/82,185,149,35.6705954,139.8411596
 1405,M12w,Amuru,Onomatsu,Russia,8/25/83,192,126,35.670438,140.0347887
 6559,M14w,Seiro,Shikoroyama,Mongolia,8/18/88,185,131.2,35.5891521,139.2854104
@@ -281,7 +281,7 @@ id,rank,fighter,dojo,district,birth_date,height,weight,Lat,Lng
 1226,M11w,Kotoshogiku,Sadogatake,Fukuoka,1/30/84,180,177,35.7772605,139.9616965
 12051,M13w,Ishiura,Miyagino,Tottori,1/10/90,173,103.6,38.2789376,140.9508565
 12094,M14w,Abi,Shikoroyama,Saitama,5/4/94,185,121,35.5891521,139.2854104
-6614,M15w,Shohozan,Nishonoseki,Fukuoka,2/9/84,177,134.5,35.7230517,139.9683767
+6614,M15w,Shohozan,Nishonoseki,Fukuoka,2/9/84,177,134.5,35.5891521,139.2854104
 8899,M16e,Kyokutaisei,Tomozuna,Hokkaido,10/18/89,184,128.2,33.5948329,130.3595555
 12412,M11w,Enho,Miyagino,Ishikawa,10/18/94,169,95,38.2789376,140.9508565
 9079,M15w,Kotoyuki,Sadogatake,Kagawa,4/2/91,176,162.4,35.7772605,139.9616965
