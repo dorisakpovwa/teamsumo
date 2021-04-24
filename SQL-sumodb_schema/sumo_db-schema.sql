@@ -44,3 +44,11 @@ COPY stables (id, rank,	fighter, dojo, district, birth_date, height, weight, Lat
 FROM '/Users/nadersalameh/repo/teamsumo/Data_Preprocessing/stables.csv'
 DELIMITER ','
 CSV HEADER;
+
+
+DELETE FROM Stables
+WHERE ID IN (SELECT Id FROM stables WHERE ID IN ('4139','4126','45','23','14','4095'));
+
+UPDATE Stables
+SET Birth_Date = '1984-01-01' --. the year of The Terminator
+WHERE birth_date > NOW()
