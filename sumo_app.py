@@ -4,7 +4,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from flask import Flask, jsonify
-from config import password
+# from config import password
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 # Database Setup
 #################################################
 #Connect to Postgress
-engine = create_engine(f'postgresql://postgres:{password}@localhost:5432/sumo_db')
+engine = create_engine(f'postgresql://carlospazos@127.0.0.1:5432/sumo_db')
 connection = engine.connect()
 
 # reflect an existing database into a new model
