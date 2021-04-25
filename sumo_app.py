@@ -39,7 +39,7 @@ def home():
 
 # route to stables 
 @app.route("/api/v1.0/stables/")
-def fighter(id):
+def fighter():
 
     # create session
     session = Session(engine)
