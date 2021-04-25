@@ -46,6 +46,22 @@ DELIMITER ','
 CSV HEADER;
 
 
+
+DROP TABLE IF EXISTS image;
+CREATE TABLE image
+(
+	--.-Name--------------------.Type----------------------.Null/NotNull
+	    image_id                 SERIAL  			PRIMARY KEY
+	  , fighter_name             VARCHAR(60)                NOT NULL 
+	  , image_url                VARCHAR(1000)              NOT NULL 
+);
+COPY image (fighter_name, image_url)
+FROM '/Users/nadersalameh/repo/teamsumo/Data_Preprocessing/fighter_img.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+
 DELETE FROM Stables
 WHERE ID IN (SELECT Id FROM stables WHERE ID IN ('4139','4126','45','23','14','4095'));
 
