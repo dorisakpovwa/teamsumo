@@ -24,6 +24,8 @@ Base.prepare(engine, reflect=True)
 # Save reference to the table
 results = Base.classes.tournament_results
 fighters = Base.classes.stables
+images = Base.classes.image
+
 
 # Create an instance of Flask
 app = Flask(__name__)
@@ -111,6 +113,28 @@ def tournament(tournamentid, fighter1_id):
         tournament_dictionary["fighter2_win"] = fighter2_win
     
         dictionary_list.append(tournament_dictionary)
+
+    return jsonify(dictionary_list)
+
+
+@app.route("/api/v1.0/tournament/<fighter>")
+def img(fighter):
+
+
+    # create session
+    session = Session(engine)
+
+    #collect tournaments
+    img = session.query(images.fighter_name, images.image_url).filter(images.fighter_name == fighter).all() 
+
+    dictionary_list = []
+    for fighter, image in img:  
+    
+        image_dictionary = {}
+        image_dictionary["fighter_name"] = fighter
+        image_dictionary["image_url"] = image 
+
+        dictionary_list.append(image_dictionary )
 
     return jsonify(dictionary_list)
 
