@@ -1,17 +1,8 @@
-//Default URLs to initialize dashboard
-stables_url = 'http://127.0.0.1:5000/api/v1.0/stables'
-tournament_url = 'http://127.0.0.1:5000/api/v1.0/tournament/2021.03'
 
-//Make API calls to get data and initializa dashboard
-d3.json(stables_url).then((stables_data)=> {
-
-    d3.json(tournament_url).then((tournament_data)=> initDashboard(stables_data,tournament_data))
-
-})
 //******************************************************* */
 //FUNCTION TO INITIALIZE DASHBOARD
 
-function initDashboard(stables,tournament){
+function initDashboard(){
    
     //Initialize Drop Down menu for Tournament Years
     //Create List of Tournament Years
@@ -51,11 +42,7 @@ function initDashboard(stables,tournament){
 
     })   
 
-    //Initialize List of Fighters for Default Tournament
-    updateFightersList(tournament) 
-    
-    //Update Map with List of fighters
-    updateJapanMap(tournament, stables)
+
     
 
 }
@@ -70,7 +57,7 @@ function updateFightersList(tournament){
     unique_fighters.sort()
 
     var drop_fighters = d3.select('#selFighter')
-
+    drop_fighters.html("")
     unique_fighters.forEach( item => {
 
         op = drop_fighters.append('option')
@@ -88,6 +75,78 @@ function updateJapanMap(tournament, stables){
 
 }
 
+//******************************************************* */
+//FUNCTION TO UPDATE IMAGE OF FIGHTER
+function updateImage(){
+
+        //Get the filter for Fighter
+        var Fighter = document.getElementById("selFighter");
+        var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
+        console.log(FighterFilter)
+
+        //Default URLs to initialize dashboard
+        image_url = 'http://127.0.0.1:5000/api/v1.0/img/'+FighterFilter
+
+        //Call API to get url
+        d3.json(image_url).then((img_data)=>{
+
+            console.log(img_data[0].image_url)
+            fighter_image = d3.select('#fighter_img')
+            // fighter_image.attr('src', img_data[0].image_url)
+        })
+
+}
+
+//******************************************************* */
+//TRIGGER EVENT FOR DATE CHANGE
+var dropDate = d3.select('#selDate')
+
+dropDate.on('change', newTournament)
+
+function newTournament(){
+
+    
+    //Get the filter for Date
+    var Date = document.getElementById("selDate");
+    var DateFilter = Date.options[Date.selectedIndex].text;
+    console.log(DateFilter)
+
+
+    
+    //Default URLs to initialize dashboard
+    stables_url = 'http://127.0.0.1:5000/api/v1.0/stables'
+    tournament_url = 'http://127.0.0.1:5000/api/v1.0/tournament/'+DateFilter
+
+    //Make API calls to get data and initializa dashboard
+    d3.json(stables_url).then((stables_data)=> {
+
+        d3.json(tournament_url).then((tournament_data)=> {
+            
+            initDashboard(stables_data,tournament_data)
+            //Initialize List of Fighters for Default Tournament
+            updateFightersList(tournament_data) 
+    
+            //Update Map with List of fighters
+            updateJapanMap(tournament_data, stables_data)
+
+            //Update Fighter Stats
+
+            //Update Fighter Image
+            updateImage()
+
+            //Update Pie Chart
+
+            //Update Table
+        
+        
+        })
+
+    })
+
+};
+
+initDashboard()
+d3.select("#selDate").dispatch("change")
 
 
 
