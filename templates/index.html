@@ -8,18 +8,23 @@
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet" type="text/javascript"/>
+
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+
     <!-- Icons -->
     <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     <link rel="stylesheet" type="text/css" href="static/css/leaflet.extra-markers.min.css" />
     <link rel="shortcut icon" href="#">
+    
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+    
 </head>
 <body>
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12 jumbotron text-center">
@@ -32,7 +37,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div id="map"></div>
+                <div id="mapid"></div>
             </div>
             <div class="col-md-2">
                 <div class="well">
@@ -103,19 +108,26 @@
         </div>
     </div>
     </div>
-    <!-- D3 -->
-    <script src="https://d3js.org/d3.v6.min.js"></script>
+    
     <!-- MomentJS -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
-    <!-- Icons --
-    <script type="text/javascript" src="static/js/leaflet.extra-markers.min.js"></script> -->
+
+    <!-- D3 -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <!-- Icons -->
+    <script src="static/js/leaflet.extra-markers.min.js"></script>
+    
     <!-- API Key -->
     <script type="text/javascript" src="static/js/config.js"></script>
+
     <!-- Our JavaScript -->
     <script type="text/javascript" src="static/js/logic.js"></script>
+
 </body>
 </html>

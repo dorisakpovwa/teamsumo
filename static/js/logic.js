@@ -18,17 +18,7 @@ function initDashboard(){
     
     // tournament_dates = []
     months = ['01','03','05','07','09','11']
-    // years.forEach(year=>{
-
-    //     months.forEach(month =>{
-
-    //         tournament_dates.push(year+'.'+month)
-
-    //     })
-
-    // })
-    // //Remove the last months for tournaments in 2021 that have not happened
-    // tournament_dates = tournament_dates.slice(0,230)
+    
 
     //Initialize Drop Down Menu of Tournament Years
     var drop_dates = d3.select('#selYear')
@@ -38,11 +28,7 @@ function initDashboard(){
         op = drop_dates.append('option')
         op.attr('value',item)
         op.text(item)
-        // //Set Default selection for Fighters Drop Down Menu
-        // if (item==='2021.03'){
-        //     op.property("selected",true)
-        // }
-
+        
     })
     
     //Initialize Drop Down Menu of Tournament Months
@@ -87,8 +73,112 @@ function updateFightersList(tournament){
 //FUNCTION TO UPDATE MAP OF JAPAN WITH MARKERS FOR ALL FIGHTERS
 function updateJapanMap(tournament, stables){
 
+    console.log(stables)
+    console.log(tournament) 
+    //create the map object
+    let myMap = MapObject();
+    myMap.invalidateSize()
+
+    //create the base layers.baselayers is a dictionary/Object
+    let baseLayers = createBaseLayers();
+
+    //Add Default Layer
+    myMap.addLayer(baseLayers["Dark Map"]);
+    
+
+    markers = createMarkers(stables);
+    
+
+    //Create Overlay Maps
+    var overlayMaps = {
+
+        "Markers": markers
+
+    }
+
+    //Add Default Layer
+    L.control.layers(baseLayers,overlayMaps, {
+        collapsed: false
+    }).addTo(myMap)
+      
+
+};
+
+function MapObject(){
+
+    var centerCoords = [38.652832, 139.839478];
+    var mapZoomLevel = 5;
+    var myMap = L.map("mapid", {
+      center: centerCoords,
+      zoom: mapZoomLevel    
+    });
+    return myMap
+
+};
+
+function createBaseLayers(){
+
+    var lightmap = L.tileLayer(
+        "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "light-v10",
+          accessToken: API_KEY,
+        }
+      );
+    
+    var darkmap = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+    {
+        attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: "dark-v10",
+        accessToken: API_KEY,
+    }
+    );
+
+    var baseMaps = {
+        "Light Map": lightmap,
+        "Dark Map": darkmap
+      };
+      return baseMaps;
+};
+
+function createMarkers(stables){
+
+    // Initialize an object containing icons for each layer group
+    var icons = {
+        
+        FIGHTER: L.ExtraMarkers.icon({
+        icon: "heart",
+        iconColor: "white",
+        markerColor: "red",
+        shape: "penta"
+        })
+    };
+    //Create Markers 
+    markers=[]
+    stables.forEach(d =>{      
+
+       markers.push(
+            L.marker([d.Dojo.latitude,d.Dojo.longitude],{
+
+                icon: icons.FIGHTER
+            })        
+        
+        )       
+
+    }) 
+
+    return L.layerGroup(markers)
 
 }
+
+//END OF FUNCTIONS TO UPDATE MAP OF JAPAN
+//******************************************************* */
 
 //******************************************************* */
 //FUNCTION TO UPDATE IMAGE OF FIGHTER
@@ -131,7 +221,7 @@ function newTournament(){
     //Get the filter for Year
     var Year = document.getElementById("selYear");
     var YearFilter = Year.options[Year.selectedIndex].text;
-    console.log(DateFilter)
+    console.log(YearFilter)
 
     //
 
