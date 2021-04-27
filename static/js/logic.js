@@ -4,6 +4,9 @@
 
 function initDashboard(){
    
+    //Change flag for function to be callend just one time
+    initDashboard = noop; // swap the functions
+
     //Initialize Drop Down menu for Tournament Years
     //Create List of Tournament Years
     function range(start, end) {
@@ -13,35 +16,45 @@ function initDashboard(){
     years = years.map(String)
     
     
-    tournament_dates = []
+    // tournament_dates = []
     months = ['01','03','05','07','09','11']
-    years.forEach(year=>{
+    // years.forEach(year=>{
 
-        months.forEach(month =>{
+    //     months.forEach(month =>{
 
-            tournament_dates.push(year+'.'+month)
+    //         tournament_dates.push(year+'.'+month)
 
-        })
+    //     })
 
-    })
-    //Remove the last months for tournaments in 2021 that have not happened
-    tournament_dates = tournament_dates.slice(0,230)
+    // })
+    // //Remove the last months for tournaments in 2021 that have not happened
+    // tournament_dates = tournament_dates.slice(0,230)
 
-    //Initialize Drop down Menu of Tournament Years
-    var drop_dates = d3.select('#selDate')
+    //Initialize Drop Down Menu of Tournament Years
+    var drop_dates = d3.select('#selYear')
 
-    tournament_dates.forEach( item => {
+    years.forEach( item => {
 
         op = drop_dates.append('option')
         op.attr('value',item)
         op.text(item)
-        //Set Default selection for Fighters Drop Down Menu
-        if (item==='2021.03'){
-            op.property("selected",true)
-        }
+        // //Set Default selection for Fighters Drop Down Menu
+        // if (item==='2021.03'){
+        //     op.property("selected",true)
+        // }
 
-    })   
+    })
+    
+    //Initialize Drop Down Menu of Tournament Months
+    var drop_months = d3.select('#selMonth')
 
+    months.forEach( item => {
+
+        op = drop_months.append('option')
+        op.attr('value',item)
+        op.text(item)
+
+    })
 
     
 
@@ -65,6 +78,8 @@ function updateFightersList(tournament){
         op.text(item)
 
     });
+
+    updateImage()
 
 }
 
@@ -91,26 +106,43 @@ function updateImage(){
         d3.json(image_url).then((img_data)=>{
 
             console.log(img_data[0].image_url)
-            fighter_image = d3.select('#fighter_img')
-            // fighter_image.attr('src', img_data[0].image_url)
+            image_div = d3.select('#fighter_img')
+            image_div.html("")
+            image_div.append('img')
+            .attr('class','picture')
+            .attr('src',img_data[0].image_url)
+            .attr('width','50')
+            .attr('height','60')
+            
         })
 
 }
 
 //******************************************************* */
 //TRIGGER EVENT FOR DATE CHANGE
-var dropDate = d3.select('#selDate')
-
-dropDate.on('change', newTournament)
+var dropYear = d3.select('#selYear')
+var dropMonth = d3.select('#selMonth')
+dropYear.on('change', newTournament)
+dropMonth.on('change', newTournament)
 
 function newTournament(){
 
     
-    //Get the filter for Date
-    var Date = document.getElementById("selDate");
-    var DateFilter = Date.options[Date.selectedIndex].text;
+    //Get the filter for Year
+    var Year = document.getElementById("selYear");
+    var YearFilter = Year.options[Year.selectedIndex].text;
     console.log(DateFilter)
 
+    //
+
+    //Get the filter for Month
+    var Month = document.getElementById("selMonth");
+    var MonthFilter = Month.options[Month.selectedIndex].text;
+
+
+
+    //concatenate date to be used in API
+    var DateFilter = YearFilter+'.'+MonthFilter
 
     
     //Default URLs to initialize dashboard
@@ -132,7 +164,7 @@ function newTournament(){
             //Update Fighter Stats
 
             //Update Fighter Image
-            updateImage()
+            
 
             //Update Pie Chart
 
@@ -146,7 +178,9 @@ function newTournament(){
 };
 
 initDashboard()
-d3.select("#selDate").dispatch("change")
+// this function does nothing, 
+function noop() {};
+d3.select("#selYear").dispatch("change")
 
 
 
