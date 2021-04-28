@@ -73,39 +73,47 @@ function updateFightersList(tournament){
 
 //******************************************************* */
 //FUNCTION TO UPDATE MAP OF JAPAN WITH MARKERS FOR ALL FIGHTERS
+
 function updateJapanMap(tournament, stables){
 
     console.log(stables)
     console.log(tournament) 
     //create the map object
-
     let myMap = MapObject();
+
     // myMap.off()
     // myMap.remove()
     
-
     //create the base layers.baselayers is a dictionary/Object
     let baseLayers = createBaseLayers();
-
+   
+    //Create Legend
+    let legend = createLegend();
+    legend.addTo(myMap);
+    
+    layers = createLayers(stables);
+    
     //Add Default Layer
     myMap.addLayer(baseLayers["Dark Map"]);
-    
-
-    markers = createMarkers(stables);
-    
+    myMap.addLayer(layers.markers);
 
     //Create Overlay Maps
     var overlayMaps = {
 
-        "Markers": markers
+        "Markers": layers.markers,
+        "Heatmap": layers.heatmap
 
     }
 
-    //Add Default Layer
+    //Add Controls
     L.control.layers(baseLayers,overlayMaps, {
         collapsed: false
     }).addTo(myMap)
-      
+     
+    //Add Legend
+    updateLegend(stables);
+
+     
 
 };
 
@@ -138,7 +146,7 @@ function createBaseLayers(){
     "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
         attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        'Doris [ドリス] • Nader [ナダー] • Carlos [カルロス]',
         maxZoom: 18,
         id: "dark-v10",
         accessToken: API_KEY,
@@ -152,7 +160,18 @@ function createBaseLayers(){
       return baseMaps;
 };
 
-function createMarkers(stables){
+function createLayers(stables){
+
+    //Create HeatMap Layer
+    points = stables.map((d) => [
+        d.Dojo.latitude,
+        d.Dojo.longitude,
+        d.Fighter_Info.weight
+      ]);
+
+    console.log(points)
+
+    var heat = L.heatLayer(points, { radius: 25, blur: 15 });
 
     // Initialize an object containing icons for each layer group
     var icons = {
@@ -172,15 +191,55 @@ function createMarkers(stables){
             L.marker([d.Dojo.latitude,d.Dojo.longitude],{
 
                 icon: icons.FIGHTER
-            })        
+            }).bindPopup("<h4>" + d.Fighter_Name + "</h4> <hr> <strong>Dojo:</strong> " + d.Dojo.dojo_name + "<br><strong>District:</strong> "+d.Dojo.district)        
         
         )       
 
     }) 
-
-    return L.layerGroup(markers)
+    console.log(markers.length)
+    return {markers: L.layerGroup(markers), heatmap:heat}
 
 }
+
+function createLegend() {
+    let info = L.control({
+      position: "bottomright",
+    });
+    // When the layer control is added, insert a div with the class of "legend"
+    info.onAdd = function () {
+      let div = L.DomUtil.create("div", "legend");
+      return div;
+    };
+    return info;
+  }
+
+  function updateLegend(stables) {
+    
+    weights = stables.map(d => d.Fighter_Info.weight)
+    console.log(weights)
+    limits = [20,110,120,130,140,190]
+    colors = ["#69B34C","#ACB334","#FAB733","#FF8E15","#FF4E11","#FF0D0D"]
+    var labels = [];
+    // console.log(Math.min.apply(Math,depths))
+    limits.forEach(function(limit, index) {
+        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+      });
+
+    var html_legend = "<h1>Fighters Weight</h1>" +
+    "<div class=\"labels\">" +
+      "<div class=\"min\">" + Math.min.apply(Math,weights)+ "</div>" +
+      "<div class=\"max\">" + Math.max.apply(Math,weights) + "</div>" +
+      "<ul>" + labels.join("") + "</ul>"+
+    "</div>";
+  
+  div = d3.selectAll('.legend').html(html_legend)
+    
+  
+  }
+
+
+
+
 
 //END OF FUNCTIONS TO UPDATE MAP OF JAPAN
 //******************************************************* */
@@ -318,7 +377,7 @@ function newFighter(){
     updateImage()
     updateTable()
     updateInfo()
-        
+     
 
 }
 
