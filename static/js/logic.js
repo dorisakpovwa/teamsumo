@@ -68,6 +68,7 @@ function updateFightersList(tournament){
     updateImage()
     updateTable()
     updateInfo()
+    pie()
 
 }
 
@@ -76,8 +77,8 @@ function updateFightersList(tournament){
 
 function updateJapanMap(tournament, stables){
 
-    console.log(stables)
-    console.log(tournament) 
+    // console.log(stables)
+    // console.log(tournament) 
     //create the map object
     let myMap = MapObject();
 
@@ -114,7 +115,6 @@ function updateJapanMap(tournament, stables){
     updateLegend(stables);
 
      
-
 };
 
 function MapObject(){
@@ -169,7 +169,7 @@ function createLayers(stables){
         d.Fighter_Info.weight
       ]);
 
-    console.log(points)
+    // console.log(points)
 
     var heat = L.heatLayer(points, { radius: 25, blur: 15 });
 
@@ -196,7 +196,7 @@ function createLayers(stables){
         )       
 
     }) 
-    console.log(markers.length)
+    // console.log(markers.length)
     return {markers: L.layerGroup(markers), heatmap:heat}
 
 }
@@ -216,7 +216,7 @@ function createLegend() {
   function updateLegend(stables) {
     
     weights = stables.map(d => d.Fighter_Info.weight)
-    console.log(weights)
+    // console.log(weights)
     limits = [20,110,120,130,140,190]
     colors = ["#69B34C","#ACB334","#FAB733","#FF8E15","#FF4E11","#FF0D0D"]
     var labels = [];
@@ -251,7 +251,7 @@ function updateImage(){
         //Get the filter for Fighter
         var Fighter = document.getElementById("selFighter");
         var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
-        console.log(FighterFilter)
+        // console.log(FighterFilter)
 
         // Default URLs to initialize dashboard
         image_url = 'http://127.0.0.1:5000/api/v1.0/img/'+FighterFilter
@@ -259,7 +259,7 @@ function updateImage(){
         // Call API to get url
         d3.json(image_url).then((img_data)=>{
 
-            console.log(img_data[0].image_url)
+            // console.log(img_data[0].image_url)
             image_div = d3.select('#fighter_img')
             image_div.html("")
             image_div.append('img')
@@ -364,6 +364,62 @@ function updateInfo() {
   }
 
 //******************************************************* */
+// FREQUENCY FUNCTION
+function frequency(array) {
+    var object = {};
+    array.forEach(function (item) {
+        if ( !object.hasOwnProperty(item) ) { object[item] = 1; } else { object[item] += 1; }});
+    return object;
+}
+//******************************************************* */
+//FUNCITON TO BUILD AND UPDATE PIE CHART 
+function pie() {
+    //Get the filter for Fighter
+    var Fighter = document.getElementById("selFighter");
+    var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
+    //Get the filter for Year
+    var Year = document.getElementById("selYear");
+    var YearFilter = Year.options[Year.selectedIndex].text;
+    //Get the filter for Month
+    var Month = document.getElementById("selMonth");
+    var MonthFilter = Month.options[Month.selectedIndex].text;
+    var DateFilter = YearFilter+'.'+MonthFilter
+    tournament_by_fighter_url = `http://127.0.0.1:5000/api/v1.0/tournament-fighter/${DateFilter}/${FighterFilter}`
+    d3.json(tournament_by_fighter_url).then((fighter_data)=>{
+        var moves = fighter_data.map(tournament => tournament.finishing_move)
+        moves = frequency(moves)
+        labels = []
+        values = []
+        for (let m in moves) {
+            labels.push(m)
+            values.push(moves[m])   
+        }
+        var data = [{
+            values: values,
+            labels: labels,
+            type: 'pie',
+            hoverinfo: 'labels',
+            textinfo: 'none'
+          }];
+          var layout = {
+            height: 400,
+            width: 500
+          };
+          Plotly.newPlot('piechart', data, layout);
+    })
+ }
+
+//******************************************************* */
+//HISTORICAL DATA
+function sumoHistory(stables){
+
+    
+    
+
+
+}
+
+//******************************************************* */
 //TRIGGER EVENT FOR DATE CHANGE
 var dropYear = d3.select('#selYear')
 var dropMonth = d3.select('#selMonth')
@@ -377,6 +433,7 @@ function newFighter(){
     updateImage()
     updateTable()
     updateInfo()
+    pie()
      
 
 }
@@ -387,7 +444,7 @@ function newTournament(){
     //Get the filter for Year
     var Year = document.getElementById("selYear");
     var YearFilter = Year.options[Year.selectedIndex].text;
-    console.log(YearFilter)
+    
 
     //Get the filter for Month
     var Month = document.getElementById("selMonth");
@@ -425,6 +482,7 @@ function newTournament(){
                 //Update Pie Chart
 
                 //Update Table
+                sumoHistory(stables_data)
 
                    
             
