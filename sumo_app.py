@@ -87,19 +87,14 @@ def fighter():
 
 
 # route to tournaments by tournament and fighter
-@app.route("/api/v1.0/tournament-fighter/<tournament>/<fighter1_id>")
-def tournament_fighter(tournament, fighter1_id):
-
-
+@app.route("/api/v1.0/tournament-fighter/<tournament>/<fighter>")
+def tournament_fighter(tournament, fighter):
     # create session
     session = Session(engine)
-
     #collect tournaments
-    tournament = session.query(results.tournament, results.day, results.fighter1_id, results.fighter1_rank, results.fighter1_name, results.fighter1_result, results.fighter1_win, results.finishing_move, results.fighter2_id, results.fighter2_rank, results.fighter2_name, results.fighter2_result, results.fighter2_win).filter(results.tournament == tournament).filter(results.fighter1_id == fighter1_id).all() 
-
+    tournament = session.query(results.tournament, results.day, results.fighter1_id, results.fighter1_rank, results.fighter1_name, results.fighter1_result, results.fighter1_win, results.finishing_move, results.fighter2_id, results.fighter2_rank, results.fighter2_name, results.fighter2_result, results.fighter2_win).filter(results.tournament == tournament).filter(results.fighter1_name == fighter).all() 
     dictionary_list = []
     for tournament, day, fighter1_id, fighter1_rank, fighter1_name, fighter1_result, fighter1_win, finishing_move, fighter2_id, fighter2_rank, fighter2_name, fighter2_result, fighter2_win in tournament:
-    
         tournament_dictionary = {}
         tournament_dictionary["tournament"] = tournament
         tournament_dictionary["day"] = day
@@ -114,9 +109,7 @@ def tournament_fighter(tournament, fighter1_id):
         tournament_dictionary["fighter2_name"] = fighter2_name
         tournament_dictionary["fighter2_result"] = fighter2_result
         tournament_dictionary["fighter2_win"] = fighter2_win
-    
         dictionary_list.append(tournament_dictionary)
-
     return jsonify(dictionary_list)
 
 

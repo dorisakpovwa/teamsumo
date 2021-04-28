@@ -66,6 +66,8 @@ function updateFightersList(tournament){
     });
 
     updateImage()
+    updateTable()
+    updateInfo()
 
 }
 
@@ -76,8 +78,11 @@ function updateJapanMap(tournament, stables){
     console.log(stables)
     console.log(tournament) 
     //create the map object
+
     let myMap = MapObject();
-    myMap.invalidateSize()
+    // myMap.off()
+    // myMap.remove()
+    
 
     //create the base layers.baselayers is a dictionary/Object
     let baseLayers = createBaseLayers();
@@ -153,7 +158,7 @@ function createMarkers(stables){
     var icons = {
         
         FIGHTER: L.ExtraMarkers.icon({
-        icon: "heart",
+        icon: "ion-social-yen",
         iconColor: "white",
         markerColor: "red",
         shape: "penta"
@@ -189,10 +194,10 @@ function updateImage(){
         var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
         console.log(FighterFilter)
 
-        //Default URLs to initialize dashboard
+        // Default URLs to initialize dashboard
         image_url = 'http://127.0.0.1:5000/api/v1.0/img/'+FighterFilter
 
-        //Call API to get url
+        // Call API to get url
         d3.json(image_url).then((img_data)=>{
 
             console.log(img_data[0].image_url)
@@ -201,19 +206,121 @@ function updateImage(){
             image_div.append('img')
             .attr('class','picture')
             .attr('src',img_data[0].image_url)
-            .attr('width','50')
-            .attr('height','60')
+            .attr('width','130')
+            .attr('height','170')
             
         })
 
 }
 
 //******************************************************* */
+//PROPRIETARY FUNCTIONS FOR TABLE UPDATE 
+function win(result) {
+    if (result == 1) { return "Yes" } else { return "No" }
+}
+function rank(r) {
+    if (r.startsWith("Y", 0 )) {  return "Yokozuna"   } else
+    if (r.startsWith("O", 0 )) {  return "Ozeki"      } else
+    if (r.startsWith("S", 0 )) {  return "Sekiwake"   } else
+    if (r.startsWith("K", 0 )) {  return "Komusubi"   } else
+    if (r.startsWith("M", 0 )) {  return "Maegashira" } else
+    if (r.startsWith("J", 0 )) {  return "Juryo"      } else  {return "rank unavailable"}
+}
+//******************************************************* */
+//FUNCTION TO UPDATE TABLE
+function updateTable(){
+    //Get the filter for Fighter
+    var Fighter = document.getElementById("selFighter");
+    var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
+    //Get the filter for Year
+    var Year = document.getElementById("selYear");
+    var YearFilter = Year.options[Year.selectedIndex].text;
+    //Get the filter for Month
+    var Month = document.getElementById("selMonth");
+    var MonthFilter = Month.options[Month.selectedIndex].text;
+    var DateFilter = YearFilter+'.'+MonthFilter
+    tournament_by_fighter_url = `http://127.0.0.1:5000/api/v1.0/tournament-fighter/${DateFilter}/${FighterFilter}`
+    //Call API to get fighter information
+    d3.json(tournament_by_fighter_url).then((fighter_data)=>{
+        tbody = d3.select('tbody')
+        tbody.html("")
+        fighter_data.forEach(tournament => {
+            var row = tbody.append("tr")
+            row.append("td").text(YearFilter);
+            row.append("td").text(MonthFilter);
+            row.append("td").text(tournament.day);
+            row.append("td").text(tournament.fighter1_name);
+            row.append("td").text(rank(tournament.fighter1_rank));
+            row.append("td").text(tournament.fighter2_name);
+            row.append("td").text(tournament.fighter1_result);
+            row.append("td").text(tournament.fighter2_result);
+            row.append("td").text(tournament.finishing_move);
+            row.append("td").text(win(tournament.fighter1_win));
+        })
+    })
+}
+
+//******************************************************* */
+//FUNCTION TO UPDATE FIGHTER INFORMATION
+// Display each key value pair from the fighter.csv file on the page.
+function updateInfo() {
+   
+    //Get the filter for Fighter
+    var Fighter = document.getElementById("selFighter");
+    var FighterFilter = Fighter.options[Fighter.selectedIndex].text;
+    
+    
+
+    //Call route with fighter information
+    stables_url = 'http://127.0.0.1:5000/api/v1.0/stables'
+
+    figfhter_info = {}
+    
+    d3.json(stables_url).then( fighters =>{
+
+        fighters.forEach(item => {
+
+
+            
+            if (item.Fighter_Name === FighterFilter){
+                
+                html = `<strong>Name:</strong> ${item.Fighter_Name}<br>
+                        <strong>Birth Date:</strong> ${item.Fighter_Info.birth_date}<br>
+                        <strong>Height:</strong> ${item.Fighter_Info.height}m<br>
+                        <strong>Weight:</strong> ${item.Fighter_Info.weight}kg<br>
+                        <strong>Dojo:</strong> ${item.Dojo.dojo_name}<br>
+                        <strong>District:</strong> ${item.Dojo.district}<br>`               
+
+
+                div = d3.select('#fighter_info')
+                div.html(html)
+
+            }
+
+        })
+
+    })
+    
+    
+  }
+
+//******************************************************* */
 //TRIGGER EVENT FOR DATE CHANGE
 var dropYear = d3.select('#selYear')
 var dropMonth = d3.select('#selMonth')
+var dropFighter = d3.select('#selFighter')
 dropYear.on('change', newTournament)
 dropMonth.on('change', newTournament)
+dropFighter.on('change', newFighter)
+
+function newFighter(){
+
+    updateImage()
+    updateTable()
+    updateInfo()
+        
+
+}
 
 function newTournament(){
 
@@ -223,44 +330,46 @@ function newTournament(){
     var YearFilter = Year.options[Year.selectedIndex].text;
     console.log(YearFilter)
 
-    //
-
     //Get the filter for Month
     var Month = document.getElementById("selMonth");
     var MonthFilter = Month.options[Month.selectedIndex].text;
 
-
-
     //concatenate date to be used in API
     var DateFilter = YearFilter+'.'+MonthFilter
 
+ 
     
     //Default URLs to initialize dashboard
     stables_url = 'http://127.0.0.1:5000/api/v1.0/stables'
     tournament_url = 'http://127.0.0.1:5000/api/v1.0/tournament/'+DateFilter
+ 
 
     //Make API calls to get data and initializa dashboard
     d3.json(stables_url).then((stables_data)=> {
 
         d3.json(tournament_url).then((tournament_data)=> {
-            
-            initDashboard(stables_data,tournament_data)
-            //Initialize List of Fighters for Default Tournament
-            updateFightersList(tournament_data) 
-    
-            //Update Map with List of fighters
-            updateJapanMap(tournament_data, stables_data)
 
-            //Update Fighter Stats
-
-            //Update Fighter Image
             
 
-            //Update Pie Chart
+                initDashboard(stables_data,tournament_data)
+                //Initialize List of Fighters for Default Tournament
+                updateFightersList(tournament_data) 
+        
+                //Update Map with List of fighters
+                updateJapanMap(tournament_data, stables_data)
 
-            //Update Table
-        
-        
+                //Update Fighter Stats
+                
+                //Update Fighter Image
+                
+
+                //Update Pie Chart
+
+                //Update Table
+
+                   
+            
+                           
         })
 
     })
