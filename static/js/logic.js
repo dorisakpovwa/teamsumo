@@ -403,10 +403,22 @@ function pie() {
           }];
           var layout = {
             height: 400,
-            width: 500,
-            paper_bgcolor: "rgba(26,27,27,255)"
+            width: 400,
+            paper_bgcolor: "rgba(26,27,27,255)",
+            title: {
+                text: 'FREQUENCY OF FINISHING MOVE',
+                font:{
+                    color: 'rgb(248,248,248)'
+                }
+            },
+            legend: {
+                orientation: 'h',
+                font:{
+                    color: 'rgb(248,248,248)' 
+                }                               
+            }
           };
-          Plotly.newPlot('piechart', data, layout);
+          Plotly.newPlot('piechart', data, layout, {displayModeBar: false});
     })
  }
 
