@@ -77,13 +77,10 @@ function updateFightersList(tournament){
 
 function updateJapanMap(tournament, stables){
 
-    // console.log(stables)
-    // console.log(tournament) 
+ 
     //create the map object
     let myMap = MapObject();
 
-    // myMap.off()
-    // myMap.remove()
     
     //create the base layers.baselayers is a dictionary/Object
     let baseLayers = createBaseLayers();
@@ -135,7 +132,7 @@ function createBaseLayers(){
         "https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
         {
           attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          'Doris [ドリス] • Nader [ナダー] • Carlos [カルロス]',
           maxZoom: 18,
           id: "light-v10",
           accessToken: API_KEY,
@@ -399,25 +396,20 @@ function pie() {
             labels: labels,
             type: 'pie',
             hoverinfo: 'labels',
-            textinfo: 'none'
+            textinfo: 'none',
+            marker: {
+                colors: ["#9e0142","#d53e4f","#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2"]
+            }
           }];
           var layout = {
             height: 400,
-            width: 500
+            width: 500,
+            paper_bgcolor: "rgba(26,27,27,255)"
           };
           Plotly.newPlot('piechart', data, layout);
     })
  }
 
-//******************************************************* */
-//HISTORICAL DATA
-function sumoHistory(stables){
-
-    
-    
-
-
-}
 
 //******************************************************* */
 //TRIGGER EVENT FOR DATE CHANGE
@@ -474,18 +466,6 @@ function newTournament(){
                 //Update Map with List of fighters
                 updateJapanMap(tournament_data, stables_data)
 
-                //Update Fighter Stats
-                
-                //Update Fighter Image
-                
-
-                //Update Pie Chart
-
-                //Update Table
-                sumoHistory(stables_data)
-
-                   
-            
                            
         })
 
