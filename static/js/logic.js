@@ -491,10 +491,7 @@ initDashboard()
 function noop() {};
 d3.select("#selYear").dispatch("change")
 
-$(document).ready(function () {
-    $('#results-table').DataTable();
-    $('.dataTables_length').addClass('bs-select');
-});
+
 
 const element = document.getElementById('fighter_img');
 
