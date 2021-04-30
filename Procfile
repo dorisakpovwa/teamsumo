@@ -1,1 +1,1 @@
-web:gunicorn sumo_app:app
+web: gunicorn sumo_app:app
