@@ -1,0 +1,1 @@
+web:gunicorn sumo_app:app
