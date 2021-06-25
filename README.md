@@ -41,7 +41,9 @@ o	Pie chart of type of kimarite (winning technique) typically used by selected w
 o	Line chart visualizing cumulative weight of fighters over time
 o	Scatter plot visualizing historical weight of fighter vs number of wins (are bigger fighters most likely to win?)
 
-# Application will use Bootstrap to be responsive and hosted in Heroku for final deployment.
+# Application will used Bootstrap to be responsive and hosted in Heroku for final deployment.
+
+ https://grandsumobasho.herokuapp.com/
 
 Learn More!
 Next basho is approaching soon in May 9 in Tokyo! Learn more following the broadcasts of Nippon Hoso Kyokai here: https://www3.nhk.or.jp/nhkworld/en/tv/sumo/ 
